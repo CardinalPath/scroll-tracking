@@ -1,4 +1,10 @@
-
+/**
+  * Scroll tracking plugin for GTM
+  * Description - this code was derived from the Google On Steroid plugin: https://github.com/CardinalPath/gas/blob/master/src/plugins/max_scroll.js
+  * Author - Bill Tripple, btripple@cardinalpath.com
+  * Version - 1.1
+  * Modified by: Ahmed Awwad
+*/
 //(function(){
 	window.CP_ScrollTracking = (function () {
 		/* configuration start */
