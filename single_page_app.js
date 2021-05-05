@@ -10,9 +10,9 @@
 		/* configuration ends */
 		
 		var documentElement = document.documentElement;
-		var _current_bucket=0
+		var _current_bucket=0;
 		var _max_scroll = 0;
-      var bucket
+
 		
 		// add event listener function
 		function addListener( obj, type, fn ) {
@@ -80,30 +80,28 @@
 		}
       
       function _resetScroll(){
-        console.log(_current_bucket)
         _current_bucket=0;
         _max_scroll=0
-        bucket=0;
-        
+
       }
 		
 		function _update_scroll_percentage() {
 			_max_scroll = Math.max(_get_scroll_percentage(), _max_scroll);
-			bucket = (_max_scroll > SETTINGS.scroll_grouping ? 1 : 0) * (Math.floor((_max_scroll) / SETTINGS.scroll_grouping) * SETTINGS.scroll_grouping);
+			var bucket = (_max_scroll > SETTINGS.scroll_grouping ? 1 : 0) * (Math.floor((_max_scroll) / SETTINGS.scroll_grouping) * SETTINGS.scroll_grouping);
 			if(_max_scroll>95){bucket=100;} // close enough
 			if(bucket>_current_bucket){
 				//console.log("bucket"+bucket);
 				_current_bucket=_max_scroll;
 				if(bucket==100){
-                   // removeListener( window, "scroll", _update_scroll_percentage ) 
+                    removeListener( window, "scroll", _update_scroll_percentage ) 
 				}
 				if (typeof(dataLayer) !== 'undefined') {
 					var dL ={};
 					dL.event = SETTINGS.data_layer_event_name;
 					dL[SETTINGS.data_layer_event_param1_name] = bucket;
-					//dataLayer.push(dL)
-					console.log(bucket)
-					_satellite.track("scroll",{"bucket":bucket});
+					dataLayer.push(dL)
+				
+					//_satellite.track("scroll",{"bucket":bucket});
 					
 				}
 			}
@@ -116,6 +114,7 @@
 				},
                 newPage:function(){    
                   _resetScroll();
+                  addListener( window, "scroll", _update_scroll_percentage );
         }
           
 			}
